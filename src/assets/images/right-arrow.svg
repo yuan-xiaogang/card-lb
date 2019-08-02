@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="16" height="16" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="右侧箭头" clip-path="url(#clip-path)">
+    <rect id="矩形_1107" data-name="矩形 1107" width="16" height="16" fill="#fff" opacity="0"/>
+    <path id="Disclosure_拷贝_4" data-name="Disclosure 拷贝 4" d="M589.468,721.915l-1.336-1.151,5.495-5.337-5.423-5.3,1.241-1.214,6.688,6.51Z" transform="translate(-581.132 -706.915)" fill="#c7c7cc"/>
+  </g>
+</svg>

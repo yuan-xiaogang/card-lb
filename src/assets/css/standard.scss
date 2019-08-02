@@ -1,0 +1,15 @@
+$fontSize: 17px !default;
+
+// 垂直居中
+@mixin flex-col-center {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+// 两侧
+@mixin flex-between {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
