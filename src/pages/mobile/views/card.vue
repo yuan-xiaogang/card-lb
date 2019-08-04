@@ -253,41 +253,30 @@
       const self = this;
       const cropper: any = this.$refs.cropper;
       cropper.getCropBlob(async (data: any) => {
-        console.log(this.client);
-        try {
-          let result = await this.client.put('object-key', new Blob(['content'],{ type: 'text/plain' }));
-          console.log(result, 'result');
-        } catch (error) {
-          console.log(error);
-          
-        }
-        
-        
-        
-        // const formdata: any = new FormData();
-        // formdata.append('file', data);
-        // formdata.append('request', JSON.stringify({
-        //   identityCard: (self.info as any).identityCard,
-        //   orientation: self.Orientation
-        // }));
-        // self.loading = true;
-        // self.$axios({
-        //   url: '/card/faceIn',
-        //   method: 'POST',
-        //   data: formdata
-        // }).then((res: any) => {
-        //   self.loading = false;
-        //   if (res.success) {
-        //     self.hasFace = true;
-        //     Toast.success('人脸录入成功');
-        //     self.showImage = false;
-        //     self.testBlob = null;
-        //   } else {
-        //     Toast.fail(res.message);
-        //   }
-        // }).catch(() => {
-        //   self.loading = false;
-        // })
+        const formdata: any = new FormData();
+        formdata.append('file', data);
+        formdata.append('request', JSON.stringify({
+          identityCard: (self.info as any).identityCard,
+          orientation: self.Orientation
+        }));
+        self.loading = true;
+        self.$axios({
+          url: '/card/faceIn',
+          method: 'POST',
+          data: formdata
+        }).then((res: any) => {
+          self.loading = false;
+          if (res.success) {
+            self.hasFace = true;
+            Toast.success('人脸录入成功');
+            self.showImage = false;
+            self.testBlob = null;
+          } else {
+            Toast.fail(res.message);
+          }
+        }).catch(() => {
+          self.loading = false;
+        })
       })
     }
     private cacelImg() {

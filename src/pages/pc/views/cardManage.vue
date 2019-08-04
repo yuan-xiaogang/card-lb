@@ -24,7 +24,7 @@
     </div>
 
     <el-row type="flex" style="margin-bottom: 20px;">
-      <el-button size="small" type="primary">新增</el-button>
+      <el-button size="small" type="primary" @click="openDialog">新增</el-button>
     </el-row>
     <div v-tbHeight>
       <el-table :data="tableData" border height="100%">
@@ -40,7 +40,7 @@
         <el-table-column fixed="right" label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         
-                        <el-button size="mini" type="danger">激活
+                        <el-button size="mini" type="danger" @click="openActiveDialog">激活
                         </el-button>
                         <el-button size="mini">人脸识别</el-button>
                     </template>
@@ -58,6 +58,34 @@
         :total="total"
       ></el-pagination>
     </div>
+    <el-dialog title="信息" :visible.sync="dialogVisible" width="30%">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" size="small" class="info__form">
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" prop="desc">
+                    <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer">
+                <el-button @click="dialogVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')" size="small">确 定</el-button>
+            </span>
+        </el-dialog>
+         <el-dialog title="激活卡" :visible.sync="activeVisible" width="30%">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px" size="small" class="info__form">
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" prop="desc">
+                    <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer">
+                <el-button @click="activeVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')" size="small">确 定</el-button>
+            </span>
+        </el-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -70,7 +98,12 @@ export default class CardInfo extends Vue {
   private pageSize: number = 20;
   private pageNumber: number = 0;
   private tableData: any = [];
-  private baseUrl = process.env.NODE_ENV === 'production'? MAINURL: TESTURL
+  private baseUrl = process.env.NODE_ENV === 'production'? MAINURL: TESTURL;
+  private dialogVisible: boolean = false;
+  private activeVisible: boolean = false;
+  private ruleForm: any = {};
+  private rules: any = {};
+  // private pageStatus: string = 'add';
   public created() {
     this.initTable();
 
@@ -92,7 +125,15 @@ export default class CardInfo extends Vue {
     });
   }
 
-
+ // 打开弹框
+ private openDialog () {
+   this.dialogVisible = true;
+  //  this.pageStatus = 'add';
+ }
+ // 打开卡激活页面
+ private openActiveDialog () {
+   this.activeVisible = true;
+ }
   private onSubmit() {
     this.initTable();
   }

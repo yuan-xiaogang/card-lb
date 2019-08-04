@@ -137,7 +137,7 @@
     }
 
     private onClickLeft() {
-      hybrid_app.back();
+      // hybrid_app.back();
     }
     private validateField() {
       // 判断票类型
