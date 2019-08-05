@@ -18,7 +18,7 @@
           <span>{{chargeOrg}}</span>
         </li>
       </ul>
-      <ul class="home__list home__list_blank">
+      <!-- <ul class="home__list home__list_blank">
         <li @click="chooseCard">
           <label>优惠标志</label>
           <span class="home__list_icon">
@@ -26,7 +26,7 @@
             <img src="@img/right-arrow.svg" alt>
           </span>
         </li>
-      </ul>
+      </ul> -->
       <p class="home__desc">
         <em class="home__desc_first">*</em> 请确保个人信息真实有效
       </p>
@@ -56,11 +56,11 @@
     </div>
     <a href="javascript:void(0)" class="home__btn" @click="nextStep">下一步</a>
 
-    <van-popup v-model="show" position="bottom" :overlay="false">内容</van-popup>
+    <!-- <van-popup v-model="show" position="bottom" :overlay="false">内容</van-popup>
     <van-popup v-model="show" position="bottom">
       <van-picker show-toolbar :columns="cardType" @change="onChange" @confirm="confirmType" @cancel="show = false"
         value-key="name" />
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 
@@ -96,15 +96,15 @@
     private homeStyle: object = {
       height: "100vh"
     };
-    private show: boolean = false;
+    // private show: boolean = false;
     private name: string = "";
     private telphone: number | null = null;
     private identityCard: number | null = null;
     private chargeOrg: string = "";
-    private cardType: [] = [];
-    private cardTypeName: string = "";
+    // private cardType: [] = [];
+    // private cardTypeName: string = "";
     private payItem: string = "";
-    private type: number | null = null;
+    // private type: number | null = null;
 
     public created() {
       // alert(getLoginParams(window.location.search))
@@ -114,11 +114,11 @@
         if (res.success) {
           this.payItem = res.result.payItem;
           this.chargeOrg = res.result.chargeOrg;
-          this.cardType = res.result.cardType;
-          if (this.cardType && this.cardType.length > 0) {
-            this.cardTypeName = ((this.cardType as any)[0] as any).name;
-            this.type = ((this.cardType as any)[0] as any).id
-          }
+          // this.cardType = res.result.cardType;
+          // if (this.cardType && this.cardType.length > 0) {
+          //   this.cardTypeName = ((this.cardType as any)[0] as any).name;
+          //   this.type = ((this.cardType as any)[0] as any).id
+          // }
         }
       });
     }
@@ -141,10 +141,10 @@
     }
     private validateField() {
       // 判断票类型
-      if (!this.cardTypeName) {
-        Toast("请选择优惠标志");
-        return false;
-      }
+      // if (!this.cardTypeName) {
+      //   Toast("请选择优惠标志");
+      //   return false;
+      // }
       // 判断姓名
       if (!this.name) {
         Toast("请输入姓名");
@@ -172,14 +172,14 @@
     }
     private nextStep() {
       // todo 暂时注释，放开验证   
-      if (!this.validateField()) return;
+      // if (!this.validateField()) return;
       const info: object = {
         name: this.name,
         identityCard: this.identityCard,
         telphone: this.telphone,
-        type: this.type,
-        loginParam: getLoginParams(window.location.search),
-        device: this.judgeDevice()
+        // type: this.type,
+        // loginParam: getLoginParams(window.location.search),
+        // device: this.judgeDevice()
       };
       this.$axios({
         url: '/card/getInfoById',
@@ -199,7 +199,7 @@
 
       })
     }
-    private judgeDevice() {
+    // private judgeDevice() {
       // if (hybrid_app.isAndroid()) {
       //   return 0
       // }
@@ -207,18 +207,18 @@
       //   return 1
       // }
       // return 2
-    }
-    private chooseCard() {
-      this.show = true;
-    }
-    private onChange(picker: Vue, values: string) {
+    // }
+    // private chooseCard() {
+    //   this.show = true;
+    // }
+    // private onChange(picker: Vue, values: string) {
       // console.log('log', values);
-    }
-    private confirmType(obj: any) {
-      this.cardTypeName = obj.name
-      this.type = obj.id
-      this.show = false;
-    }
+    // }
+    // private confirmType(obj: any) {
+    //   this.cardTypeName = obj.name
+    //   this.type = obj.id
+    //   this.show = false;
+    // }
   }
 </script>
 <style lang="scss" scoped>
