@@ -29,7 +29,7 @@ class HttpRequest {
         const instance = axios.create({...defaultConfig});
         if (isOpenInterceptor) {
             await this.interceptors(instance, options.url as string)
-        }       
+        }
         return instance(options)
     }
     private destroy(url: string) {
@@ -64,7 +64,7 @@ class HttpRequest {
         }, (error:any) => {
             if (url) {
                 this.destroy(url)
-            }  
+            }
             console.error(error);
             // Toast.fail(error);
         })

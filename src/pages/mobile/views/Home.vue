@@ -83,7 +83,7 @@
   import {
     getLoginParams
   } from '@/utils/tools.js';
-  import hybrid_app from '@/assets/js/hybrid_app.js';
+  // import hybrid_app from '@/assets/js/hybrid_app.js';
 
   @Component({
     components: {
@@ -170,10 +170,10 @@
       }
       return true
     }
-    private  nextStep() {
+    private nextStep() {
       // todo 暂时注释，放开验证   
       if (!this.validateField()) return;
-       const info: object = {
+      const info: object = {
         name: this.name,
         identityCard: this.identityCard,
         telphone: this.telphone,
@@ -184,28 +184,29 @@
       this.$axios({
         url: '/card/getInfoById',
         method: 'POST',
-        data: {...info}
+        data: {
+          ...info
+        }
       }).then((res: any) => {
         if (res.result.vaild) {
-         
-      localStorage.setItem('info', JSON.stringify(info))
-      this.$router.replace({
-        path: "/card"
-      });
+          localStorage.setItem('info', JSON.stringify(info))
+          this.$router.replace({
+            path: "/card"
+          });
         } else {
           Toast(res.message)
         }
 
       })
     }
-    private judgeDevice () {
-      if (hybrid_app.isAndroid()) {
-        return 0
-      }
-      if (hybrid_app.isIPhone()) {
-        return 1
-      }
-      return 2
+    private judgeDevice() {
+      // if (hybrid_app.isAndroid()) {
+      //   return 0
+      // }
+      // if (hybrid_app.isIPhone()) {
+      //   return 1
+      // }
+      // return 2
     }
     private chooseCard() {
       this.show = true;

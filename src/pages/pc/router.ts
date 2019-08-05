@@ -13,7 +13,7 @@ const route = new Router({
       path: '/',
       name: 'index',
       component: Index,
-      redirect: '/cardInfo',
+      redirect: '/cardManage',
       children: menu
     },
     {

@@ -17,7 +17,7 @@ import './directives';
 
 import axios from './axios'
 import { AxiosStatic } from 'axios'
-import OSS from 'ali-oss';
+// import OSS from 'ali-oss';
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -26,14 +26,14 @@ declare module "vue/types/vue" {
 }
 Vue.prototype.$axios = axios
 
-const client = new OSS({
-  region: 'http://oss-cn-hangzhou.aliyuncs.com',
-  accessKeyId: 'ZNrCcGVKMR7fIry1',
-  accessKeySecret: 'j5KPlUXTzO4oiBX83aWMdfXcYmQYTP',
-  bucket: 'lvboyuan-card'
-});
+// const client = new OSS({
+//   region: 'http://oss-cn-hangzhou.aliyuncs.com',
+//   accessKeyId: 'ZNrCcGVKMR7fIry1',
+//   accessKeySecret: 'j5KPlUXTzO4oiBX83aWMdfXcYmQYTP',
+//   bucket: 'lvboyuan-card'
+// });
 
-Vue.prototype.$oss = client
+// Vue.prototype.$oss = client
 
 
 

@@ -1,8 +1,17 @@
 export default [
+    // {
+    //   path: '/cardInfo',
+    //   name: 'cardInfo',
+    //   component: () => import('./views/cardInfo.vue'),
+    //   meta: {
+    //     title: '用户管理',
+    //     icon: 'el-icon-document'
+    //   }
+    // },
     {
-      path: '/cardInfo',
-      name: 'cardInfo',
-      component: () => import('./views/cardInfo.vue'),
+      path: '/cardManage',
+      name: 'cardManage',
+      component: () => import('./views/cardManage.vue'),
       meta: {
         title: '用户管理',
         icon: 'el-icon-document'
@@ -17,15 +26,7 @@ export default [
         icon: 'el-icon-document'
       }
     },
-    {
-      path: '/cardManage',
-      name: 'cardManage',
-      component: () => import('./views/cardManage.vue'),
-      meta: {
-        title: '卡管理',
-        icon: 'el-icon-document'
-      }
-    },
+    
     {
       path: '/entryRecord',
       name: 'entryRecord',

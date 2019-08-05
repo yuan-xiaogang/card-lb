@@ -88,12 +88,12 @@
   import {
     MAINURL
   } from '@/config/index';
-  import hybrid_app from '@/assets/js/hybrid_app.js';
+  // import hybrid_app from '@/assets/js/hybrid_app.js';
   import EXIF from 'exif-js';
   import {
     VueCropper
   } from "vue-cropper"
-  import OSS from 'ali-oss';
+  // import OSS from 'ali-oss';
   @Component({
     components: {
       [NavBar.name]: NavBar,
@@ -112,7 +112,7 @@
     private Orientation: any = null
     private showImage: boolean = false
     private loading: boolean = false
-    private client: any = null
+    // private client: any = null
 
     private options: any = {
       autoCropWidth: 375,
@@ -133,25 +133,25 @@
         autoCropHeight: window.screen.availWidth
       }
 
-      if (window.history && window.history.pushState) {
-        history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', this.onClickLeft, false); //false阻止默认事件
-      }
+      // if (window.history && window.history.pushState) {
+      //   history.pushState(null, null, document.URL);
+      //   window.addEventListener('popstate', this.onClickLeft, false); //false阻止默认事件
+      // }
 
-      this.client = new OSS({
-        region: 'http://oss-cn-hangzhou.aliyuncs.com',
-        accessKeyId: 'ZNrCcGVKMR7fIry1',
-        accessKeySecret: 'j5KPlUXTzO4oiBX83aWMdfXcYmQYTP',
-        bucket: 'lvboyuan-card'
-      });
+      // this.client = new OSS({
+      //   region: 'http://oss-cn-hangzhou.aliyuncs.com',
+      //   accessKeyId: 'ZNrCcGVKMR7fIry1',
+      //   accessKeySecret: 'j5KPlUXTzO4oiBX83aWMdfXcYmQYTP',
+      //   bucket: 'lvboyuan-card'
+      // });
 
     }
-    public destroyed() {
-      window.removeEventListener('popstate', this.onClickLeft, false)
-    }
+    // public destroyed() {
+    //   window.removeEventListener('popstate', this.onClickLeft, false)
+    // }
     private onClickLeft() {
-      hybrid_app.back();
-      // this.$router.push({name: 'home'});
+      // hybrid_app.back();
+      this.$router.push({name: 'home'});
     }
     private respondOrderStatus() {
       const json = getUrlJson(window.location.href);

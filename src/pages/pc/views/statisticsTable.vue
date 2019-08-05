@@ -109,24 +109,24 @@
             }
         }
         private initTable() {
-            this.init(this.params).then(res => {
+            this.init(this.params).then((res: any) => {
                 this.tableData = res.result.records;
                 this.total = res.result.total;
             })
         }
-        private handleSizeChange(size) {
+        private handleSizeChange(size:number) {
             this.pageSize = size;
             this.initTable()
         }
-        private handleCurrentChange(page) {
+        private handleCurrentChange(page:number) {
             this.pageNumber = page;
             this.initTable()
         }
-        private handleSizeChange1(size) {
+        private handleSizeChange1(size:number) {
             this.pageSize = size;
             this.initTable1()
         }
-        private handleCurrentChange1(page) {
+        private handleCurrentChange1(page:number) {
             this.pageNumber = page;
             this.initTable1()
         }
@@ -134,13 +134,13 @@
             this.$axios({
                 url: '/pc/card/getDetailList',
                 params: this.params1,
-            }).then(res => {
+            }).then((res:any) => {
                 this.detailTable = res.result.records
                 this.total1 = res.result.total
 
             })
         }
-        private openDialog(row, cardType) {
+        private openDialog(row: any, cardType:any) {
             this.detailTable = [];
             switch (cardType) {
                 case 1:
