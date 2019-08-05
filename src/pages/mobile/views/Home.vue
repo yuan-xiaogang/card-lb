@@ -185,10 +185,11 @@
         url: '/card/getInfoById',
         method: 'POST',
         data: {
-          ...info
+          ...info,
+          isMobile: 1
         }
       }).then((res: any) => {
-        if (res.result.vaild) {
+        if (res.result.valid) {
           localStorage.setItem('info', JSON.stringify(info))
           this.$router.replace({
             path: "/card"

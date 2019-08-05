@@ -37,21 +37,22 @@
         <el-table-column prop="isActivate" label="是否激活" width="80">
           <template slot-scope="scope">{{scope.row.isActivate ? '是': '否'}}</template>
         </el-table-column>
-         <el-table-column prop="ifEnter" label="是否已录入人脸" width="120">
+        <el-table-column prop="ifEnter" label="是否已录入人脸" width="120">
           <template slot-scope="scope">{{scope.row.ifEnter ? '是': '否'}}</template>
         </el-table-column>
         <el-table-column prop="orderDate" label="生效时间" width="180"></el-table-column>
-        <el-table-column prop="expiringDate" label="失效时间"></el-table-column>
+        <el-table-column prop="expiringDate" label="失效时间" min-width="180"></el-table-column>
         <!-- <el-table-column prop="amount" label="购买金额(元)" width="150"></el-table-column>
         <el-table-column prop="company" label="所属公司" width="150"></el-table-column>
         <el-table-column prop="comments" label="备注" width="150"></el-table-column> -->
-       
+
         <el-table-column fixed="right" label="操作" width="180" align="center">
           <template slot-scope="scope">
 
-            <el-button size="mini" type="danger" :disabled="scope.row.type === 1 && scope.row.isActivate === 1" @click="openActiveDialog(scope.row)">激活
+            <el-button size="mini" type="danger" :disabled="scope.row.type === 1 && scope.row.isActivate === 1"
+              @click="openActiveDialog(scope.row)">激活
             </el-button>
-            <el-button size="mini">人脸录入</el-button>
+            <el-button size="mini" @click="openFace">人脸录入</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -108,6 +109,18 @@
         <el-button type="primary" @click="submitActiveForm('activeForm')" size="small">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog title="人脸录入" :visible.sync="faceVisible" width="50%">
+      <div>
+        <video ref="video" width="500" height="500" autoplay muted></video>
+        <canvas style="display:none;" ref="canvas" width="500" height="500"></canvas>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="faceVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="faceVisible = false" size="small">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 <script lang="ts">
@@ -138,8 +151,6 @@
 
 
   @Component({})
-
-
   export default class CardInfo extends Vue {
     private formInline: object = {};
     private total: number = 0;
@@ -149,6 +160,7 @@
     private baseUrl = process.env.NODE_ENV === 'production' ? MAINURL : TESTURL;
     private dialogVisible: boolean = false;
     private activeVisible: boolean = false;
+    private faceVisible: boolean = false;
     private ruleForm: any = {
       name: '',
       identityCard: '',
@@ -213,6 +225,9 @@
       // this.getCardList();
 
     }
+    // public mounted() {
+    //    this.openVideo();
+    // }
     private get _params() {
       return {
         pageSize: this.pageSize,
@@ -237,6 +252,44 @@
         this.total = res.result.total;
         this.tableData = res.result.records || [];
       });
+    }
+    // 打开摄像头
+    private openVideo() {
+      let MediaStreamTrack: any;
+
+      let video = this.$refs.video;
+console.log(navigator.mediaDevices);
+console.log(navigator.getMedia);
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true
+        }).then(function (stream) {
+          console.log(stream);
+          MediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
+          video.src = (window.URL).createObjectURL(stream);
+          video.play();
+        }).catch(function (err) {
+          console.log(err);
+        });
+      } else if (navigator.getMedia) {
+        navigator.getMedia({
+          video: true
+        }).then(function (stream) {
+          console.log(stream);
+          MediaStreamTrack = stream.getTracks()[1];
+          video.src = (window.webkitURL).createObjectURL(stream);
+          video.play();
+        }).catch(function (err: any) {
+          console.log(err);
+        });
+      }
+    }
+    // 打开人脸
+    private openFace() {
+      this.faceVisible = true;
+      this.openVideo();
     }
     // 切换卡类型
     private changeType(type: number) {
@@ -302,15 +355,26 @@
           this.$axios({
             url: '/card/getInfoById',
             method: 'POST',
-            data: this.ruleForm
+            data: {
+              ...this.ruleForm,
+              isMobile: 1
+            }
           }).then((res: any) => {
             if (res.success) {
-              this.$message({
-                message: '新增成功',
-                type: 'success'
-              });
-              this.dialogVisible = false;
-              this.initTable();
+              if (res.result.valid) {
+                this.$message({
+                  message: '新增成功',
+                  type: 'success'
+                });
+                this.dialogVisible = false;
+                this.initTable();
+              } else {
+                this.$message({
+                  message: res.message,
+                  type: 'warning'
+                });
+              }
+
             }
 
           })
